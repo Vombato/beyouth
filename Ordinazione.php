@@ -1,10 +1,11 @@
+<html>
+<head>
+</head>
+<body>
 <?php
-
 	$nomeCliente = $_POST['nome'];
 	$numTavolo = $_POST['numTavolo'];
-
 	$totalePrezzo = $_POST['check'];
-
 	$prodotto1 = $_POST['prod1'];
 	$prodotto2 = $_POST['prod2'];
 	$prodotto3 = $_POST['prod3'];
@@ -29,8 +30,8 @@
 		$price = $prodotto4 * 2;
 		echo "Prodotto D - ".$prodotto4." unit&agrave; * 2.00E = ".round($price, 2)."</br>";
 	}
-
 	// Spesa totale
 	echo "Spesa totale: ".$totalePrezzo."E";
-
 ?>
+</body>
+</html>
