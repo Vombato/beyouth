@@ -54,9 +54,9 @@
 		
 		<h3>Prodotto 1 (0.99E)
 		<div id="opera">
-			<input class="bott" type=button value='-' onclick='processA(-1);check(-5);'>
-			<input class="prod" type=test size=5 id='value1' name='prod1' value='0'>
-			<input class="bott" type=button value='+' onclick='processA(1);check(5)'>
+			<input class="bott" type='button' value='-' onclick='processA(-1);check(-5);'>
+			<input class="prod" type='test' size=5 id='value1' name='prod1' value='0'>
+			<input class="bott" type='button' value='+' onclick='processA(1);check(5)'>
 		
 			<script language=javascript>
 			function processA(plusMinusOne){
