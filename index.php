@@ -52,7 +52,7 @@
 		
 		
 		
-		<h3>Prodotto 1 (0.99E)
+		<h3>Prodotto 1 (0.99&euro;)
 		<div id="opera">
 			<input class="bott" type='button' value='-' onclick='processA(-1);check(-5);'>
 			<input class="prod" type='test' size=5 id='value1' name='prod1' value='0'>
@@ -74,7 +74,7 @@
 		</h3>
 		
 		
-		<h3>Prodotto 2 (1.50E)
+		<h3>Prodotto 2 (1.50&euro;)
 		<div id="opera">
 			<input class="bott" type=button value='-' onclick='javascript:processB(-1)'>
 			<input class="prod" type=test size=5 id='value2' name='prod2' value='0'>
@@ -96,7 +96,7 @@
 		</h3>
 		
 		
-		<h3>Prodotto 3 (3.05E)
+		<h3>Prodotto 3 (3.05&euro;)
 		<div id="opera">
 			<input class="bott" type=button value='-' onclick='javascript:processC(-1)'>
 			<input class="prod" type=test size=5 id='value3' name='prod3' value='0'>
@@ -118,7 +118,7 @@
 		</h3>
 		
 		
-		<h3>Prodotto 4 (2.00E)
+		<h3>Prodotto 4 (2.00&euro;)
 		<div id="opera">
 			<input class="bott" type=button value='-' onclick='javascript:processD(-1)'>
 			<input class="prod" type=test size=5 id='value4' name='prod4' value='0'>
@@ -140,7 +140,7 @@
 		</h3>
 		
 		<div style="font-size:45; font-weight:bold; margin-top:5vh; float:right;">Totale spesa: 
-			<input class="botto" type=text size=5 id='totPrezzo' name='check' value='0'>
+			<input class="botto" type=text size=5 id='totPrezzo' name='check' value='0'> &euro;
 		</div>
 			<input style=" margin-top:10vh; font-size:40;" type="submit" value="ORDINA">
 		</fieldset>
