@@ -28,7 +28,7 @@
         
         // Ritorna array con tutti gli ordini o 0 se non è andato a buon fine
         function getOrders() {
-            $query = $this->link->query("SELECT customer_name,table_num,products_list FROM order ");
+            $query = $this->link->query("SELECT `customer_name`,`table_num`,`products_list`,`paid` FROM `order` ");
 			$counts = $query->rowCount();
 			
 			if($counts != 0) {
@@ -40,6 +40,18 @@
 			}
         }
 
+        // Aggiorna il pagamento di un ordine, 0 FAIL, 1 SUCCESS
+        function payOrder($orderID) {
+            $query = $this->link->prepare("UPDATE `order` SET `paid`=1 WHERE `id`=?");
+            
+            $query->bindParam(1, $orderID, PDO::PARAM_STR);
+            
+            $query->execute();
+            $counts = $query->rowCount();
+            
+            return $counts;
+        }
+        
 		
 	}
 

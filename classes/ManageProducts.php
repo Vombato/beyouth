@@ -28,8 +28,15 @@
             return $counts;
         }
         
-        function getProductInfo($name) {
-            $query = $this->link->query("SELECT * FROM product WHERE name = '$name'");
+        function getProductInfo($value) { // Value può essere l'id (un intero) o il nome (una stringa)
+            
+            if(ctype_digit($value)) { // Numero, cerco in base all'ID
+                $query = $this->link->query("SELECT * FROM product WHERE id = '$value'");
+            }
+            else { // Stringa, cerco in base al nome
+                $query = $this->link->query("SELECT * FROM product WHERE name = '$value'");
+            }
+            
 			$counts = $query->rowCount();
 			
 			if($counts == 1) {
