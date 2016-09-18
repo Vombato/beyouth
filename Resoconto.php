@@ -8,23 +8,12 @@
     $patatine = $product->getProductInfo('Patate Fritte');
     $insalata = $product->getProductInfo('Insalata');
 
-    // COntrolli che i campi siano string e int
-    $error = "";
-
-    if(isset($_POST['name']) && !empty($_POST['name']) && !ctype_digit($_POST['name'])) {
+    if(isset($_POST['name'])) {
         $costumer = $_POST['name'];
-    } else {
-       $error = $error."Errore nome cliente <br/>"; 
     }
 
-	if(isset($_POST['tableNum']) && !empty($_POST['tableNum']) && ctype_digit($_POST['tableNum'])) {
+	if(isset($_POST['tableNum'])) {
         $tableNum = $_POST['tableNum'];
-    } else {
-        $error = $error."Errore campo tavolo"; 
-    }
-
-    if($error != "") { // Se è stato settato qualche errore ritorno all'index
-        header('Location: index.php?error='.$error);
     }
 
     // Quantità per ogni prodotto
@@ -39,7 +28,7 @@
 <html>
 
     <head>
-    
+        <title>Resoconto</title>
     </head>
     
     <body>

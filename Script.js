@@ -24,3 +24,23 @@ function checkAmount() {
         document.getElementById('checkAll').disabled = true;
     }
 }
+
+
+function checkValuesType(customerName, customerTable) {
+    // Con questa funzione evito continui richiami alla pagina index in caso di form non validi
+    if(isNaN(customerName) && customerName != "" && !isNaN(customerTable)) {
+        return true;
+    }
+    else {
+        if(isNaN(customerName) == false || customerName == "") {
+            document.getElementById('errorName').innerHTML = "Errore campo nome.";
+        }
+        if(isNaN(customerTable) == true || customerTable == "") {
+            document.getElementById('errorTable').innerHTML = "Errore campo tavolo.";
+        }
+        
+        return false;
+    }
+    
+}
+

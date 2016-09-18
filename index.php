@@ -17,18 +17,12 @@
 
 	<body onload="checkAmount();">
 		
-		<form action="Resoconto.php" method="POST">
+		<form action="Resoconto.php" method="POST" onsubmit="return checkValuesType(document.getElementById('name').value, document.getElementById('tableNum').value);">
 
-            Nome cliente: <input type="text" name="name">
-            </br></br>
-            Numero tavolo: <input type="text" name="tableNum">
-            <p style="color: red;">
-                <?php 
-                    if(isset($_GET['error'])) {
-                        echo $_GET['error'];
-                    }  
-                ?>
-            </p>
+            Nome cliente: <input type="text" name="name" id="name">
+            <p id="errorName" style="color:red; font-size: 15px;"></p>
+            Numero tavolo: <input type="text" name="tableNum" id="tableNum">
+            <p id="errorTable" style="color:red; font-size: 15px;"></p>
 
             <h1><?php echo $piadina[0]['name']." prezzo: ".$piadina[0]['price']."&euro;"; ?>
 
