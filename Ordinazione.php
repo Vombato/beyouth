@@ -25,22 +25,17 @@
     // Creo l'ordine e lo salvo nel db
     $productsList = ""; // Sarà formata id:quantita;id:quantita;id:quantita;...
 
-    if($piadinaQ > 0) {
-        $piadina = $product->getProductInfo("Piadina al Salame");
-        $productsList = $productsList.$piadina[0]["id"].":".$piadinaQ.";";
-    }
-    if($cocacolaQ > 0) {
-        $cocacola = $product->getProductInfo("Coca Cola");
-        $productsList = $productsList.$cocacola[0]["id"].":".$cocacolaQ.";";
-    }
-    if($patatineQ > 0) {
-        $patatine = $product->getProductInfo("Patate Fritte");
-        $productsList = $productsList.$patatine[0]["id"].":".$patatineQ.";";
-    }
-    if($insalataQ > 0) {
-        $insalata = $product->getProductInfo("Insalata");
-        $productsList = $productsList.$insalata[0]["id"].":".$insalataQ.";";
-    }
+    $piadina = $product->getProductInfo("Piadina al Salame");
+    $productsList = $productsList.$piadina[0]["id"].":".$piadinaQ.";";
+
+    $cocacola = $product->getProductInfo("Coca Cola");
+    $productsList = $productsList.$cocacola[0]["id"].":".$cocacolaQ.";";
+
+    $patatine = $product->getProductInfo("Patate Fritte");
+    $productsList = $productsList.$patatine[0]["id"].":".$patatineQ.";";
+
+    $insalata = $product->getProductInfo("Insalata");
+    $productsList = $productsList.$insalata[0]["id"].":".$insalataQ.";";
     
     $registration = $order->registerOrder($costumerName, $costumerTable, $productsList); // Salvo nel db
 

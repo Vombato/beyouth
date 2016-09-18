@@ -12,7 +12,7 @@
 
 	<head>
 		<title>Main Page</title>
-        <script src="Script.js"></script>
+        <script src="js/Script.js"></script>
 	</head>
 
 	<body onload="checkAmount();">
@@ -56,7 +56,7 @@
 
             </h1>
 		
-            <h3>Totale: <input type="text" name="totCheck" id="totCheck" value="0"></h3>
+            <h3>Totale: <input type="text" name="totCheck" id="totCheck" value="0" readonly></h3>
             
 			<input type="submit" id="checkAll" name="checkAll" value="RESOCONTO">
 		</form>
