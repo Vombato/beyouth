@@ -14,7 +14,7 @@
 		
         // Registra un nuovo prodotto, ritorna: 0 FAIL, 1 SUCCESS
         function registerProduct($name, $price, $category, $in_store) {
-            $query = $this->link->prepare("INSERT INTO product (name,price,category,in_store) VALUES (?,?,?,?)"); // Predispondo la query
+            $query = $this->link->prepare("INSERT INTO `product` (`name`,`price`,`category`,`in_store`) VALUES (?,?,?,?)"); // Predispondo la query
             
             // Per evitare falle di sicurezza 
             $query->bindParam(1, $name, PDO::PARAM_STR);
