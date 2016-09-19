@@ -16,11 +16,17 @@
     $insalata = $product->getProductInfo("Insalata");
     $insalataID = $insalata[0]["id"];
 
+    if(isset($_GET['msg'])) {
+        echo $_GET['msg'];
+    }
+
 ?>
 <html>
 
     <head>
         <title>Admin</title>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+        <script type="text/javascript" src="js/Script.js"></script>
     </head>
 
     <body>
@@ -37,7 +43,7 @@
         
         <center>
             
-        <center><h1>Ordini Non Pagati</h1></center>
+        <h1>Ordini Non Pagati</h1>
             
         <table>
             
@@ -75,6 +81,12 @@
             
                 for($i=0; $i<count($allOrders); $i++) {
                     if($allOrders[$i]['paid'] == 0) {
+                        
+                        $piadinaQ = 0;
+                        $cocacolaQ = 0;
+                        $patatineQ = 0;
+                        $insalataQ = 0;
+                        
                         echo "<tr>";
 
                         echo "<td><center> ".$allOrders[$i]['customer_name']." </center></td>";
@@ -95,7 +107,8 @@
                                     $amount = $info[0]["price"] * $subOrder[1]; // Costo singolo prodotto
                                     $total = $total + $amount; // Aggiorno il costo totale
 
-                                    echo "<td><center> ".$subOrder[1]." - ".$amount."&euro; </center></td>";
+                                    $piadinaQ = $subOrder[1]; // Quantità di piadina per questo ordine
+                                    echo "<td><center> ".$piadinaQ." - ".$amount."&euro; </center></td>";
                                     continue;
                                 }
                                 else {
@@ -109,7 +122,8 @@
                                     $amount = $info[0]["price"] * $subOrder[1]; // Costo singolo prodotto
                                     $total = $total + $amount; // Aggiorno il costo totale
 
-                                    echo "<td><center> ".$subOrder[1]." - ".$amount."&euro; </center></td>";
+                                    $cocacolaQ = $subOrder[1];
+                                    echo "<td><center> ".$cocacolaQ." - ".$amount."&euro; </center></td>";
                                     continue;
                                 }
                                 else {
@@ -123,7 +137,8 @@
                                     $amount = $info[0]["price"] * $subOrder[1]; // Costo singolo prodotto
                                     $total = $total + $amount; // Aggiorno il costo totale
 
-                                    echo "<td><center> ".$subOrder[1]." - ".$amount."&euro; </center></td>";
+                                    $patatineQ = $subOrder[1];
+                                    echo "<td><center> ".$patatineQ." - ".$amount."&euro; </center></td>";
                                     continue;
                                 }
                                 else {
@@ -137,7 +152,8 @@
                                     $amount = $info[0]["price"] * $subOrder[1]; // Costo singolo prodotto
                                     $total = $total + $amount; // Aggiorno il costo totale
 
-                                    echo "<td><center> ".$subOrder[1]." - ".$amount."&euro; </center></td>";
+                                    $insalataQ = $subOrder[1];
+                                    echo "<td><center> ".$insalataQ." - ".$amount."&euro; </center></td>";
                                     continue;
                                 }
                                 else {
@@ -150,10 +166,18 @@
                         }
 
                         echo "<td><center> <b>".$total."</b> </center></td>"; // Costo totale
-
-                        echo "<td><center> <button type='button'>Pagato</button> </center></td>"; // Pagamento con relativo invio alla cucina
                         
-                        echo "<td><center> <button type='button'>Modifica</button> </center></td>"; // Modifiche
+                        echo "<td><center> 
+                        <input type='button' name='paidBtn' onclick='payment(".$allOrders[$i]["id"].");' value='Pagato'>
+                        </center></td>"; // Pagamento con relativa visualizzazione in cucina
+                        
+                        echo "<td><center> 
+                        <form action='edit_order.php' method='POST'>
+                        DA FINIRE
+                        <input type='hidden' name='piadinaQ' value=".$piadinaQ.">
+                        <input type='submit' value='Modifica' onclick=''> 
+                        </form>
+                        </center></td>"; // Modifiche
                         
                         echo "</tr>";
 
@@ -164,7 +188,6 @@
             
         </table>
         </center>
-        
         <br /> <br /> <br />
         
         <center>
