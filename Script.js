@@ -51,4 +51,14 @@ function checkValuesType(customerName, customerTable) {
     
 }
 
-
+function payment($id) {
+    // function below will run clear.php?h=michael
+    $.ajax({
+        type: "GET",
+        url: "payment.php" ,
+        data: { id: $id },
+        success : function() { 
+            location.reload();
+        }
+    });
+}
