@@ -28,7 +28,7 @@
         
         // Ritorna array con tutti gli ordini o 0 se non è andato a buon fine
         function getOrders() {
-            $query = $this->link->query("SELECT `customer_name`,`table_num`,`products_list`,`paid` FROM `order` ");
+            $query = $this->link->query("SELECT * FROM `order` ");
 			$counts = $query->rowCount();
 			
 			if($counts != 0) {
