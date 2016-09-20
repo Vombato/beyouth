@@ -5,16 +5,13 @@
     $orderManager = new ManageOrders();
     $product = new ManageProducts();
 
-    $allOrders = $orderManager->getOrders();
+    $products = $product->getProducts(); // Tutte le info di tutti i prodotti
 
-    $piadina = $product->getProductInfo("Piadina al Salame");
-    $piadinaID = $piadina[0]["id"];
-    $cocacola = $product->getProductInfo("Coca Cola");
-    $cocacolaID = $cocacola[0]["id"];
-    $patatine = $product->getProductInfo("Patate Fritte");
-    $patatineID = $patatine[0]["id"];
-    $insalata = $product->getProductInfo("Insalata");
-    $insalataID = $insalata[0]["id"];
+    $allOrders = $orderManager->getOrders(); // Tutte le info di tutti gli ordini
+    
+    for($k=0; $k<count($products); $k++) {
+        $prodIDs[$k] = $products[$k]["id"]; // Array con tutti gli id dei prodotti in ordine di immissione nel db
+    }
 
     if(isset($_GET['msg'])) {
         echo $_GET['msg'];
@@ -54,18 +51,15 @@
                 <td>
                     <center><b>Numero Tavolo</b></center>
                 </td>
-                <td>
-                    <center><b>Piadina al Salame</b></center>
-                </td>
-                <td>
-                    <center><b>Coca Cola</b></center>
-                </td>
-                <td>
-                    <center><b>Patate Fritte</b></center>
-                </td>
-                <td>
-                    <center><b>Insalata</b></center>
-                </td>
+                <?php
+                    
+                    for($q=0; $q<count($products); $q++) {
+                        echo "<td>
+                                <center><b>".$products[$q]["name"]."</b></center>
+                            </td>";
+                    }
+                
+                ?>
                 <td>
                     <center><b>Prezzo Totale</b></center>
                 </td>
@@ -82,86 +76,43 @@
                 for($i=0; $i<count($allOrders); $i++) {
                     if($allOrders[$i]['paid'] == 0) {
                         
-                        $piadinaQ = 0;
-                        $cocacolaQ = 0;
-                        $patatineQ = 0;
-                        $insalataQ = 0;
-                        
                         echo "<tr>";
 
                         echo "<td><center> ".$allOrders[$i]['customer_name']." </center></td>";
                         echo "<td><center> ".$allOrders[$i]['table_num']." </center></td>";
 
                         $orderString = $allOrders[$i]['products_list'];
+                        $orderString = substr($orderString, 0, -1); // Tolgo l'utlimo ; se no mi dà un elemento vuoto nell'array quando esplodo
+                        
                         $order = explode(";", $orderString); // Array con tutti gli ordini (coppia id:quantita)
 
+                        // Completo gli ordini in caso ne siano stati aggiunti altri dopo un po' settandoli a 0 (per far combaciare la tabella)
+                        for($h=count($order); $h<count($products); $h++) {
+                            $order[$h] = $products[$h]["id"].":0";
+                        }
+                    
                         $total = 0;
-
+                        
                         for($j=0; $j<count($order); $j++) {
                             $subOrder = explode(":", $order[$j]);
+        
+                            for($t=0; $t<count($prodIDs); $t++) {
+                                if($subOrder[0] == $prodIDs[$t]) { // Controllo che (in teoria) sarà sempre vero dato che i prodotti negli ordini sono registrati in ordine di id e $prodIDs al suo interno ha gli ID dei prodotti nello stesso ordine
+                                    
+                                    if($subOrder[1] > 0) { // Se la quantità per quel prodotto è > 0
+                                        $info = $product->getProductInfo($subOrder[0]); // Prendo info tramite l'id
+                                        $amount = $info[0]["price"] * $subOrder[1]; // Costo singolo prodotto
+                                        $total = $total + $amount; // Aggiorno il costo totale
 
-
-                            if($subOrder[0] == $piadinaID) {
-                                if($subOrder[1] > 0) {
-                                    $info = $product->getProductInfo($subOrder[0]); // Prendo info tramite l'id
-                                    $amount = $info[0]["price"] * $subOrder[1]; // Costo singolo prodotto
-                                    $total = $total + $amount; // Aggiorno il costo totale
-
-                                    $piadinaQ = $subOrder[1]; // Quantità di piadina per questo ordine
-                                    echo "<td><center> ".$piadinaQ." - ".$amount."&euro; </center></td>";
-                                    continue;
-                                }
-                                else {
-                                    echo "<td><center> </center></td>";
-                                    continue;
+                                        echo "<td><center> ".$subOrder[1]." - ".$amount."&euro; </center></td>"; // Quantità per prodotto - prezzo totale
+                                        continue;
+                                    }
+                                    else {
+                                        echo "<td><center> </center></td>";
+                                        continue;
+                                    }
                                 }
                             }
-                            else if($subOrder[0] == $cocacolaID) {
-                                if($subOrder[1] > 0) {
-                                    $info = $product->getProductInfo($subOrder[0]); // Prendo info tramite l'id
-                                    $amount = $info[0]["price"] * $subOrder[1]; // Costo singolo prodotto
-                                    $total = $total + $amount; // Aggiorno il costo totale
-
-                                    $cocacolaQ = $subOrder[1];
-                                    echo "<td><center> ".$cocacolaQ." - ".$amount."&euro; </center></td>";
-                                    continue;
-                                }
-                                else {
-                                    echo "<td><center> </center></td>";
-                                    continue;
-                                }
-                            }
-                            else if($subOrder[0] == $patatineID) {
-                                if($subOrder[1] > 0) {
-                                    $info = $product->getProductInfo($subOrder[0]); // Prendo info tramite l'id
-                                    $amount = $info[0]["price"] * $subOrder[1]; // Costo singolo prodotto
-                                    $total = $total + $amount; // Aggiorno il costo totale
-
-                                    $patatineQ = $subOrder[1];
-                                    echo "<td><center> ".$patatineQ." - ".$amount."&euro; </center></td>";
-                                    continue;
-                                }
-                                else {
-                                    echo "<td><center> </center></td>";
-                                    continue;
-                                }
-                            }
-                            else if($subOrder[0] == $insalataID) {
-                                if($subOrder[1] > 0) {
-                                    $info = $product->getProductInfo($subOrder[0]); // Prendo info tramite l'id
-                                    $amount = $info[0]["price"] * $subOrder[1]; // Costo singolo prodotto
-                                    $total = $total + $amount; // Aggiorno il costo totale
-
-                                    $insalataQ = $subOrder[1];
-                                    echo "<td><center> ".$insalataQ." - ".$amount."&euro; </center></td>";
-                                    continue;
-                                }
-                                else {
-                                    echo "<td><center> </center></td>";
-                                    continue;
-                                }
-                            }
-
 
                         }
 
@@ -174,7 +125,6 @@
                         echo "<td><center> 
                         <form action='edit_order.php' method='POST'>
                         DA FINIRE
-                        <input type='hidden' name='piadinaQ' value=".$piadinaQ.">
                         <input type='submit' value='Modifica' onclick=''> 
                         </form>
                         </center></td>"; // Modifiche
@@ -203,18 +153,15 @@
                 <td>
                     <center><b>Numero Tavolo</b></center>
                 </td>
-                <td>
-                    <center><b>Piadina al Salame</b></center>
-                </td>
-                <td>
-                    <center><b>Coca Cola</b></center>
-                </td>
-                <td>
-                    <center><b>Patate Fritte</b></center>
-                </td>
-                <td>
-                    <center><b>Insalata</b></center>
-                </td>
+                <?php
+                    
+                    for($q=0; $q<count($products); $q++) {
+                        echo "<td>
+                                <center><b>".$products[$q]["name"]."</b></center>
+                            </td>";
+                    }
+                
+                ?>
                 <td>
                     <center><b>Prezzo Totale</b></center>
                 </td>
@@ -226,89 +173,62 @@
             <?php // Qui avviene la magia
             
                 for($i=0; $i<count($allOrders); $i++) {
-                    if($allOrders[$i]['paid'] == 1) {
+                    if($allOrders[$i]['paid'] == 1) { // Quelli pagati
+                        
                         echo "<tr>";
 
                         echo "<td><center> ".$allOrders[$i]['customer_name']." </center></td>";
                         echo "<td><center> ".$allOrders[$i]['table_num']." </center></td>";
 
                         $orderString = $allOrders[$i]['products_list'];
+                        $orderString = substr($orderString, 0, -1); // Tolgo l'utlimo ; se no mi dà un elemento vuoto nell'array quando esplodo
+                        
                         $order = explode(";", $orderString); // Array con tutti gli ordini (coppia id:quantita)
 
+                        // Completo gli ordini in caso ne siano stati aggiunti altri dopo un po' settandoli a 0 (per far combaciare la tabella)
+                        for($h=count($order); $h<count($products); $h++) {
+                            $order[$h] = $products[$h]["id"].":0";
+                        }
+                    
                         $total = 0;
-
+                        
                         for($j=0; $j<count($order); $j++) {
                             $subOrder = explode(":", $order[$j]);
+        
+                            for($t=0; $t<count($prodIDs); $t++) {
+                                if($subOrder[0] == $prodIDs[$t]) { // Controllo che (in teoria) sarà sempre vero dato che i prodotti negli ordini sono registrati in ordine di id e $prodIDs al suo interno ha gli ID dei prodotti nello stesso ordine
+                                    
+                                    if($subOrder[1] > 0) { // Se la quantità per quel prodotto è > 0
+                                        $info = $product->getProductInfo($subOrder[0]); // Prendo info tramite l'id
+                                        $amount = $info[0]["price"] * $subOrder[1]; // Costo singolo prodotto
+                                        $total = $total + $amount; // Aggiorno il costo totale
 
-
-                            if($subOrder[0] == $piadinaID) {
-                                if($subOrder[1] > 0) {
-                                    $info = $product->getProductInfo($subOrder[0]); // Prendo info tramite l'id
-                                    $amount = $info[0]["price"] * $subOrder[1]; // Costo singolo prodotto
-                                    $total = $total + $amount; // Aggiorno il costo totale
-
-                                    echo "<td><center> ".$subOrder[1]." - ".$amount."&euro; </center></td>";
-                                    continue;
-                                }
-                                else {
-                                    echo "<td><center> </center></td>";
-                                    continue;
+                                        echo "<td><center> ".$subOrder[1]." - ".$amount."&euro; </center></td>"; // Quantità per prodotto - prezzo totale
+                                        continue;
+                                    }
+                                    else {
+                                        echo "<td><center> </center></td>";
+                                        continue;
+                                    }
                                 }
                             }
-                            else if($subOrder[0] == $cocacolaID) {
-                                if($subOrder[1] > 0) {
-                                    $info = $product->getProductInfo($subOrder[0]); // Prendo info tramite l'id
-                                    $amount = $info[0]["price"] * $subOrder[1]; // Costo singolo prodotto
-                                    $total = $total + $amount; // Aggiorno il costo totale
-
-                                    echo "<td><center> ".$subOrder[1]." - ".$amount."&euro; </center></td>";
-                                    continue;
-                                }
-                                else {
-                                    echo "<td><center> </center></td>";
-                                    continue;
-                                }
-                            }
-                            else if($subOrder[0] == $patatineID) {
-                                if($subOrder[1] > 0) {
-                                    $info = $product->getProductInfo($subOrder[0]); // Prendo info tramite l'id
-                                    $amount = $info[0]["price"] * $subOrder[1]; // Costo singolo prodotto
-                                    $total = $total + $amount; // Aggiorno il costo totale
-
-                                    echo "<td><center> ".$subOrder[1]." - ".$amount."&euro; </center></td>";
-                                    continue;
-                                }
-                                else {
-                                    echo "<td><center> </center></td>";
-                                    continue;
-                                }
-                            }
-                            else if($subOrder[0] == $insalataID) {
-                                if($subOrder[1] > 0) {
-                                    $info = $product->getProductInfo($subOrder[0]); // Prendo info tramite l'id
-                                    $amount = $info[0]["price"] * $subOrder[1]; // Costo singolo prodotto
-                                    $total = $total + $amount; // Aggiorno il costo totale
-
-                                    echo "<td><center> ".$subOrder[1]." - ".$amount."&euro; </center></td>";
-                                    continue;
-                                }
-                                else {
-                                    echo "<td><center> </center></td>";
-                                    continue;
-                                }
-                            }
-
 
                         }
 
                         echo "<td><center> <b>".$total."</b> </center></td>"; // Costo totale
                         
-                        echo "<td><center> <button type='button'>Modifica</button> </center></td>"; // Modifiche
+                        echo "<td><center> 
+                        <form action='edit_order.php' method='POST'>
+                        DA FINIRE
+                        <input type='submit' value='Modifica' onclick=''> 
+                        </form>
+                        </center></td>"; // Modifiche
                         
                         echo "</tr>";
 
                     }
                 }
+            
             ?>
             
         </table>
