@@ -13,14 +13,15 @@
 		}
 		
         // Registra un nuovo prodotto, ritorna: 0 FAIL, 1 SUCCESS
-        function registerProduct($name, $price, $category, $in_store) {
-            $query = $this->link->prepare("INSERT INTO `product` (`name`,`price`,`category`,`in_store`) VALUES (?,?,?,?)"); // Predispondo la query
+        function registerProduct($name, $short_name, $price, $category, $in_store) {
+            $query = $this->link->prepare("INSERT INTO `product` (`name`,`short_name`,`price`,`category`,`in_store`) VALUES (?,?,?,?,?)"); // Predispondo la query
             
             // Per evitare falle di sicurezza 
             $query->bindParam(1, $name, PDO::PARAM_STR);
-			$query->bindParam(2, $price, PDO::PARAM_STR);
-		    $query->bindParam(3, $category, PDO::PARAM_STR);
-		    $query->bindParam(4, $in_store, PDO::PARAM_STR);
+            $query->bindParam(2, $short_name, PDO::PARAM_STR);
+			$query->bindParam(3, $price, PDO::PARAM_STR);
+		    $query->bindParam(4, $category, PDO::PARAM_STR);
+		    $query->bindParam(5, $in_store, PDO::PARAM_STR);
             
             $query->execute(); // Eseguo la query
             $counts = $query->rowCount();
@@ -34,7 +35,7 @@
                 $query = $this->link->query("SELECT * FROM product WHERE id = '$value'");
             }
             else { // Stringa, cerco in base al nome
-                $query = $this->link->query("SELECT * FROM product WHERE name = '$value'");
+                $query = $this->link->query("SELECT * FROM product WHERE short_name = '$value'");
             }
             
 			$counts = $query->rowCount();
@@ -48,6 +49,20 @@
 			}
         }
 
+        // Ritorna array con tutti i prodotti o 0 se non è andato a buon fine
+        function getProducts() {
+            $query = $this->link->query("SELECT * FROM `product` ");
+			$counts = $query->rowCount();
+			
+			if($counts != 0) {
+				$result = $query->fetchAll(); // Array annidato
+				return $result;
+			} 
+			else {
+				return $counts; // 0
+			}
+        }
+        
 		
 	}
 
