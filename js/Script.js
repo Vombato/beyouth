@@ -25,7 +25,6 @@ function checkAmount() {
     }
 }
 
-
 function checkValuesType(customerName, customerTable) {
     // Con questa funzione evito continui richiami alla pagina index in caso di form non validi
     if(isNaN(customerName) && customerName != "" && !isNaN(customerTable) && customerTable != "") {
@@ -74,3 +73,27 @@ function deleteOrder($id) {
         }
     });
 }
+
+function isChecked() {
+    if(document.getElementById("takeawayF").checked) { // Checcato NO asporto
+        document.getElementById('tableNum').disabled = false;
+    }
+    if(document.getElementById("takeawayT").checked) { // Checcato SI asporto
+        document.getElementById('tableNum').innerHTML = ""; // DA RIVEDERE
+        document.getElementById('tableNum').disabled = true;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
