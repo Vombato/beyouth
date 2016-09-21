@@ -69,6 +69,9 @@
                 <td>
                     <center><b>Modifiche</b></center>
                 </td>
+                <td>
+                    <center><b>Cancella</b></center>
+                </td>
             </tr>
 
             <?php // Qui avviene la magia
@@ -143,6 +146,13 @@
                         </form>
                         </center></td>";
 
+                        // Bottone Cancella
+                        echo "<td><center>
+                        <input type='button' name='deleteBtn' onclick='deleteOrder(".$allOrders[$i]["id"].");' value='Cancella'>
+                        </center></td>";
+                        
+                        
+                        
                         echo "</tr>";
 
                     }
@@ -181,6 +191,9 @@
                 </td>
                 <td>
                     <center><b>Modifiche</b></center>
+                </td>
+                <td>
+                    <center><b>Cancella</b></center>
                 </td>
             </tr>
 
@@ -251,6 +264,14 @@
                         </form>
                         </center></td>";
 
+                        // Bottone Cancella
+                        echo "<td><center>
+                        <input type='button' name='deleteBtn' onclick='deleteOrder(".$allOrders[$i]["id"].");' value='Cancella'>
+                        </center></td>";
+                        
+                        
+                        
+                        
                         echo "</tr>";
 
                     }
