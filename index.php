@@ -1,5 +1,5 @@
 <?php
-    include_once('classes/ManageProducts.php'); 
+    include_once('classes/ManageProducts.php');
 	$product = new ManageProducts();
 
     $products = $product->getProducts();
@@ -23,7 +23,7 @@
 
             <?php
             // Stampo tutti i prodotti disponibili
-            
+
                 for($i=0; $i<count($products); $i++) {
                     echo "<h1>".$products[$i]['name']." prezzo: ".$products[$i]['price']."&euro;";
 
@@ -33,11 +33,11 @@
 
                     echo "</h1>";
                 }
-            
+
             ?>
-		
+
             <h3>Totale: <input type="text" name="totCheck" id="totCheck" value="0" readonly></h3>
-            
+
 			<input type="submit" id="checkAll" name="checkAll" value="RESOCONTO">
 		</form>
 		</center>
