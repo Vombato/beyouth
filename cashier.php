@@ -14,18 +14,18 @@
 
 	<body onload="checkAmount();">
 		<center>
-		<form action="cashier_report.php" method="POST" onsubmit="return checkValuesType(document.getElementById('name').value, document.getElementById('tableNum').value);">
+		<form action="cashier_report.php" method="POST" onsubmit="return checkValuesTypeCashier(document.getElementById('name').value, document.getElementById('tableNum').value);">
 
             Nome cliente: <input type="text" name="name" id="name">
             <p id="errorName" style="color:red; font-size: 15px;"></p>
             Numero tavolo: <input type="text" name="tableNum" id="tableNum">
             <p id="errorTable" style="color:red; font-size: 15px;"></p>
 
-            Da Asporto: 
+            Da Asporto:
             <input type="radio" id="takeawayF" name="takeaway" value="No" onclick="isChecked();" checked>No
             <input type="radio" id="takeawayT" name="takeaway" value="Si" onclick="isChecked();">Si
-            
-            
+
+
             <?php
             // Stampo tutti i prodotti disponibili
 

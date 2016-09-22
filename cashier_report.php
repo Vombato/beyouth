@@ -9,9 +9,16 @@
         $costumer = $_POST['name'];
     }
 
-	if(isset($_POST['tableNum'])) {
-        $tableNum = $_POST['tableNum'];
+    $takeaway = $_POST["takeaway"];
+    if($takeaway == 'No') {
+        if(isset($_POST['tableNum'])) {
+            $tableNum = $_POST['tableNum'];
+        } 
     }
+    else {
+        $tableNum = "ASPORTO";
+    }
+	
 
     for($i=0; $i<count($products); $i++) {
         $name = $products[$i]["short_name"];

@@ -25,7 +25,7 @@
     }
 
     $registration = $order->registerOrder($costumerName, $costumerTable, $productsList); // Salvo nel db
-    
+
     if($registration != 0) {
         header('Location: cashier.php');
     }
