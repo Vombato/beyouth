@@ -1,0 +1,27 @@
+body{
+	font-family: 'Ubuntu', sans-serif;
+	font-size:30;
+}
+#opera{
+	
+	float:right;
+}
+.prod{
+	text-align:center;
+	font-size:30;
+	width:7vw;
+}
+.bott{
+	font-size:30;
+    height:5vh;
+	width:5vh;
+
+}
+.botto{
+	width:14vw;
+	font-size:30;
+	text-align:center;
+}
+.ordinare{
+	margin-top:3vh;
+}

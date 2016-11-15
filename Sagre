@@ -1,0 +1,28 @@
+1.  Lato Cliente:
+Legge il menu ed effettua l'ordine tramite nome e numero tavolo;
+
+2.  Lato Cassa (divisa tra mobile (2) e fissa (1) ):
+Legge gli ordini relativi ai suoi tavoli di competenza;
+Può modificarli ed eventualmente cancellarli, nel caso l'ordine fosse stato creato "per sbaglio";
+Invia gli ordini alla cucina;
+
+3.  Lato Cucina:
+Legge gli ordini confermati dalla cassa;
+Prepara le cose scrivendo NomeCliente e NumeroTavolo;
+Spedisce cameriere con NomeCliente e NumeroTavolo;
+
+4.  Lato ROOT:
+Ha i permessi per:
+Creare un ordine con priorità selezionabile;
+Modificare/Cancellare/Sospendere un ordine;
+Avere una lista aggiornata degli ordini in corso, per NumeroTavolo, per orario o per NomeCliente;
+Attivare la Modalità EMERGENZA*
+
+
+
+*=  La Modalità EMERGENZA è una modalità nella quale il "Lato Cliente" diventa inaccessible con un avviso che dice che
+    per problemi tecnici gli ordini potranno essere effettuati soltanto recandosi fisicamente alla cassa, dove gli verrà
+    compilata una comanda cartacea. Questa modalità verrà attivata soltanto nel caso si verificassero problemi seri, come
+    la caduta del server per le troppe query o il verificarsi di un bug che ne comprometta il funzionamento del sistema
+    stesso.
+
