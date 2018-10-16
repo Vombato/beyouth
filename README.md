@@ -1,7 +1,5 @@
 # beyouth
 
-Questa repo è dedicata alla piattaforma progettata per gestire festa BeYouth di Castel Bolognese
+## DEPRECATED
 
-
-GUIDA A GIT: http://rogerdudler.github.io/git-guide/index.it.html
-ALTRA GUIDA: https://help.github.com/articles/set-up-git/
+This repo was intended as a platform to manage orders on BeYouth Fest (2016) in Castel Bolognese.
